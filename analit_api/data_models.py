@@ -6,7 +6,7 @@ db = SQLAlchemy()
 class FileMetadata(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(256), nullable=False)
-    filepath = db.Column(db.string(512), nullable=False)
+    filepath = db.Column(db.String(512), nullable=False)
     upload_date = db.Column(db.DateTime, nullable=False)
     file_size = db.Column(db.Integer, nullable=False)
 

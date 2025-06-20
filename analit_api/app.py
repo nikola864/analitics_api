@@ -23,7 +23,7 @@ def upload_file():
 
     if file and allowed_file(file.filename):
         filename = secure_filename(file.filename)
-        file_id = storage_service.save_file(file.filename)
+        file_id = storage_service.save_file(file, filename)
         return jsonify({'file_id': file_id}), 201
     return jsonify({'error': 'File type not allowed'}), 400
 
@@ -46,7 +46,7 @@ def analyze_data(file_id):
     except Exception as e:
         return jsonify({'error': str(e)}), 404
 
-@app.route('/clean/<file_id>', method=['POST'])
+@app.route('/clean/<file_id>', methods=['POST'])
 def clean_data(file_id):
     try:
         df = storage_service.get_file_data(file_id)
@@ -73,8 +73,8 @@ def get_stats(analysis_id):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
 
-if __name__ == 'main':
-    app.run(debug=True)
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 
 
