@@ -1,23 +1,17 @@
 from flask import Flask, request, jsonify
 from werkzeug.utils import secure_filename
 import pandas as pd
+from extensions import db
 from data_service import DataService
 from storage_service import StorageService
 import os
 from config import Config
-from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# Инициализация SQLAlchemy
-db = SQLAlchemy(app)
-
-from data_models import FileMetadata, AnalysisResult
-
-# Инициализация папки для загрузок
+db.init_app(app)
 Config.init_app(app)
-
 
 storage_service = StorageService()
 data_service = DataService(storage_service)
@@ -82,6 +76,12 @@ def get_stats(analysis_id):
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in Config.ALLOWED_EXTENSIONS
+
+
+if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Создает таблицы, если их нет
+    app.run(host='0.0.0.0', port=5000, debug=True)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

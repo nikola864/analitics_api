@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from app import db
+from extensions import db
 from data_models import FileMetadata, AnalysisResult
 from datetime import datetime, timezone
 from config import Config
