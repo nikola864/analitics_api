@@ -5,12 +5,18 @@ from data_service import DataService
 from storage_service import StorageService
 import os
 from config import Config
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
+# Инициализация SQLAlchemy
+db = SQLAlchemy(app)
+# Инициализация папки для загрузок
+Config.init_app(app)
+
 storage_service = StorageService()
-data_service = DataService(StorageService)
+data_service = DataService(storage_service)
 
 @app.route('/upload', methods=['POST'])
 def upload_file():
