@@ -1,7 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-from datetime import datetime
-
-db = SQLAlchemy()
+from app import db
 
 class FileMetadata(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,7 +14,7 @@ class AnalysisResult(db.Model):
     file_id = db.Column(db.Integer, db.ForeignKey('file_metadata.id'), nullable=False)
     analysis_date = db.Column(db.DateTime, nullable=False)
     basic_stats = db.Column(db.JSON)
-   #correlation_matrix = db.Column(db.JSON)
+    correlation_matrix = db.Column(db.JSON)
 
 
 

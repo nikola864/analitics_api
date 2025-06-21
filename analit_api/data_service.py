@@ -8,7 +8,7 @@ class DataService:
 
     def calculate_basic_stats(self, df):
         stats = {}
-        numeric_cols = df.select_dtyps(include=['number']).columns
+        numeric_cols = df.select_dtypes(include=['number']).columns
         for col in numeric_cols:
             stats[col] = {
                 'mean': df[col].mean(),
@@ -18,7 +18,7 @@ class DataService:
                 'std': df[col].std()
             }
 
-        categorical_cols = df.select_dtyps(include=['object']).columns
+        categorical_cols = df.select_dtypes(include=['object']).columns
         for col in categorical_cols:
             stats[col] = {
                 'unique_count': df[col].nunique(),

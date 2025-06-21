@@ -12,8 +12,12 @@ app.config.from_object(Config)
 
 # Инициализация SQLAlchemy
 db = SQLAlchemy(app)
+
+from data_models import FileMetadata, AnalysisResult
+
 # Инициализация папки для загрузок
 Config.init_app(app)
+
 
 storage_service = StorageService()
 data_service = DataService(storage_service)
